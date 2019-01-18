@@ -30,15 +30,18 @@ int main(int argc, char** argv) {
 
     // loop throught all the arguments
     for (int i=1; i < argc; i++) {
+    
+        // get the output of `--out=`
         char* var;
-        var = get_val(argv[i], OUT);
+        var = get_val(argv[i], "--out=");
         if (var != NULL) {
-            printf("OUTPUT:  %s\n", get_val(argv[i], OUT));
+            printf("OUTPUT:  %s\n", get_val(argv[i], "--out="));
         }
 
-        if (check_flag(argv[i], "", "--help") == 0) {
+        // check if arguments are: sort, or long args
+        if (check_flag(argv[i], "-s", "--long") == 0) {
             printf("Help Menu.\n");
-        } else if (check_flag(argv[i], "", "--version") == 0) {
+        } else if (check_flag(argv[i], "-x", "--xxx") == 0) {
             printf("Script Version.\n");
         }
 
