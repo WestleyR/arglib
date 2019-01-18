@@ -7,7 +7,7 @@
 ```
 git https://github.com/WestleyR/arglib
 cd arglib/
-sudo make install-arglib
+sudo make install
 ```
 
 <br>

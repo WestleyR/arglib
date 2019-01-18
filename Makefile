@@ -25,7 +25,7 @@ CFLAG = -static
 
 default: all
 
-install-arglib: $(LIB_SOURCE)
+install: $(LIB_SOURCE)
 	@echo "Installing: arglib.h"
 	@echo " INSTALL: $(LIB_SOURCE) $(LIB_INSTALL)"
 	@cp -f $(LIB_SOURCE) $(LIB_INSTALL)
@@ -41,7 +41,7 @@ compile-example: $(SOURCE)
 .PHONY: all
 all:
 	@echo "To install the library, do:"
-	@echo "  $$ sudo make install-arglib"
+	@echo "  $$ sudo make install"
 	@echo
 
 clean:
