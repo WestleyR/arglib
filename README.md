@@ -12,6 +12,15 @@ sudo make install-arglib
 
 <br>
 
+## Usage:
+
+```c
+#include <arglib.c>
+```
+
+
+<br>
+
 **BETTER README COMMING SOON!**
 
 <br>
