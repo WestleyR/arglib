@@ -15,7 +15,7 @@ sudo make install-arglib
 ## Usage:
 
 ```c
-#include <arglib.c>
+#include <arglib.h>
 
 // for printf
 #include <stdio.h>
