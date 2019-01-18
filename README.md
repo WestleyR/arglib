@@ -70,10 +70,9 @@ int main(int argc, char** argv) {
         if (find_args(argv[i], "f") == 0) {
             printf("f = true\n");
         }
-
     }
-
-
+    return(0);
+}
 ```
 
 
