@@ -1,8 +1,8 @@
 // created by: WestleyR
 // email: westleyr@nym.hush.com
 // https://github.com/WestleyR/arglib
-// date: Jan 17, 2018
-// version-1.0.0
+// date: Jan 18, 2018
+// version-1.0.1
 //
 // The Clear BSD License
 //
@@ -57,7 +57,7 @@ int check_small_args(char* input, char* flag) {
 
     for (int i=1; i < string_len; i++) {
         if (strchr(flag, input[i]) == 0) {
-            printf("-%s: Option not found.\n", &input[i]);
+            printf("-%c: Option not found.\n", input[i]);
             return(1);
         }
     }
