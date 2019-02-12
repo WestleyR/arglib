@@ -12,8 +12,6 @@
 // This software is licensed under a Clear BSD License.
 //
 
-#include "/usr/lib/arglib.c"
-
 int check_flag(char* input, char* sort_flag, char* long_flag);
 char* get_val(char* input, char* out);
 int check_small_args(char* input, char* flag);

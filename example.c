@@ -13,67 +13,92 @@
 //
 
 #include <stdio.h>
-#include <arglib.h>
+#include <stdlib.h>
+#include <string.h>
+#include <dirent.h> 
+
+#include "deps/arglib.h"
 
 #define SCRIPT_VERSION "version-1.0.0, Jan 17, 2018"
+#define TypeFile "--type="
 
-#define OUT "--out="
+char *SCRIPT_NAME;
+char *Path;
 
-int help_menu() {
+void helpMenu() {
+    printf("DESCRIPTION:\n");
+    printf("  list file with relvent path, used for definging varibals, eg.\n");
+    printf("  FOO = $(shell lcf --type=.c libs/)  # 'FOO' will be a string if all .c files.\n");
+    printf("\n");
     printf("USAGE:\n");
-    printf("    ./somthing [--option]...\n");
+    printf("  %s [--option]... <path>\n", SCRIPT_NAME);
     printf("\n");
     printf("OPTIONS:\n");
-    printf("    -h, --help     : print help menu & exit.\n");
-    printf("    -v, --version  : print script version & exit.\n");
+    printf("  --type=string  : list files only of type string.\n");
+    printf("  -h, --help     : print help menu & exit.\n");
+    printf("  -v, --version  : print script version & exit.\n");
     printf("\n");
 
-    return(0);
+    exit(0);
 }
 
-int script_version() {
+void scriptVersion() {
     printf("%s\n", SCRIPT_VERSION);
-    return(0);
+    exit(0);
 }
 
 int main(int argc, char** argv) {
+    SCRIPT_NAME = argv[0];
+
+    char *var;
+    char *fileType;
 
     if (argc <= 1 ) {
-        help_menu();
+        helpMenu();
     }
 
     for (int i=1; i < argc; i++) {
-        char* var;
-        var = get_val(argv[i], OUT);
-        if (var != NULL) {
-            printf("OUTPUT:  %s\n", get_val(argv[i], OUT));
-        }
+        var = get_val(argv[i], TypeFile);
 
         if (check_flag(argv[i], "", "--help") == 0) {
-            printf("help option set!\n");
-//            help_menu();
+            helpMenu();
+            return(0);
         } else if (check_flag(argv[i], "", "--version") == 0) {
-            script_version();
+            scriptVersion();
+        } else if (var != NULL) {
+            fileType = var;
+        } else if ((strstr(argv[i], "--") == argv[i]) && (strstr(argv[i], TypeFile) != argv[i])) {
+            printf("%s: Option not found: %s\n", SCRIPT_NAME, argv[i]);
+            return(2);
+        } else {
+            Path = argv[i];
         }
 
-        if (check_small_args(argv[i], "lvdf") != 0) {
+        // all the avalibal sort options:
+        if (check_small_args(argv[i], "hv") != 0) {
             return(1);
         }
 
-        if (find_args(argv[i], "l") == 0) {
-            printf("l = true\n");
-        }
         if (find_args(argv[i], "v") == 0) {
-            printf("v = true\n");
+            scriptVersion();
+            return(0);
         }
-        if (find_args(argv[i], "d") == 0) {
-            printf("d = true\n");
+        if (find_args(argv[i], "h") == 0) {
+            helpMenu();
+            return(0);
         }
-        if (find_args(argv[i], "f") == 0) {
-            printf("f = true\n");
-        }
-
     }
+
+
+    if (Path == NULL) {
+        printf("Need a Path.\n");
+        return(1);
+    }
+//    printf("Path: %s\n", Path);
+
+    listFiles(Path, fileType);
+
+    printf("\n");
 
 
     return(0);

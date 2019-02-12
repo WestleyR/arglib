@@ -15,10 +15,7 @@
 #include <string.h>
 #include <stdio.h>
 
-int check_flag(char* input, char* sort_flag, char* long_flag);
-char* get_val(char* input, char* out);
-int check_small_args(char* input, char* flag);
-int find_args(char* input, char* flag);
+#include "arglib.h"
 
 int check_flag(char* input, char* sort_flag, char* long_flag) {
     if ((strcmp(input, sort_flag) == 0) || (strcmp(input, long_flag) == 0)) {
@@ -47,8 +44,9 @@ int check_small_args(char* input, char* flag) {
     string_len = strlen(input);
 
     if (input[0] != '-') {
-        printf("ERROR: Not a valid option: %s\n", input);
-        return(1);
+//        printf("ERROR: Not a valid option: %s\n", input);
+//        return(1);
+        return(0);
     }
 
     if (input[1] == '-') {
@@ -57,7 +55,7 @@ int check_small_args(char* input, char* flag) {
 
     for (int i=1; i < string_len; i++) {
         if (strchr(flag, input[i]) == 0) {
-            printf("-%s: Option not found.\n", &input[i]);
+            printf("-%c: Option not found.\n", input[i]);
             return(1);
         }
     }
@@ -70,7 +68,8 @@ int find_args(char* input, char* flag) {
     string_len = strlen(input);
 
     if (input[0] != '-') {
-        printf("ERROR: No: - found in: %s\n", input);
+//        printf("ERROR: No: - found in: %s\n", input);
+//        return(1);
         return(1);
     }
     if (input[1] == '-') {
