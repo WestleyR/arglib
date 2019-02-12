@@ -17,7 +17,7 @@
 #include <string.h>
 #include <dirent.h> 
 
-#include "deps/arglib.h"
+#include "deps/arglib/arglib.h"
 
 #define SCRIPT_VERSION "version-1.0.0, Jan 17, 2018"
 #define TypeFile "--type="
@@ -94,9 +94,6 @@ int main(int argc, char** argv) {
         printf("Need a Path.\n");
         return(1);
     }
-//    printf("Path: %s\n", Path);
-
-    listFiles(Path, fileType);
 
     printf("\n");
 
