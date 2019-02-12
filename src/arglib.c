@@ -1,8 +1,8 @@
 // created by: WestleyR
 // email: westleyr@nym.hush.com
 // https://github.com/WestleyR/arglib
-// date: Jan 18, 2018
-// version-1.0.1
+// date: Feb 11, 2018
+// version-1.0.2
 //
 // The Clear BSD License
 //
