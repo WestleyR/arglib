@@ -4,15 +4,62 @@
 
 ## Install:
 
+Install via [clib](https://github.com/clibs/clib):
+
 ```
-git https://github.com/WestleyR/arglib
-cd arglib/
-sudo make install
+$ clib install WestleyR/arglib
 ```
 
 <br>
 
 ## Usage:
+
+Add this to your main code:
+
+```c
+#include "deps/arglib/arglib.h"
+```
+
+<br>
+
+Then, here is a basic Makefile, combine this to your main project Makefile:
+
+```makefile
+CC = gcc
+TARGET = test
+SOURCE = example.c
+
+FUNC =
+FUNC += deps/arglib/arglib.c
+#FUNC += deps/other/deps.c
+
+DEP_URL =
+DEP_URL += WestleyR/arglib
+#DEP_URL += other-user/library
+
+CLIB = clib install
+
+.PHONY:
+all: $(TARGET)
+
+.PHONY:
+$(TARGET): $(FUNC) $(SOURCE)
+	$(CC) -o $(TARGET) $(SOURCE) $(FUNC)
+
+.PHONY:
+$(FUNC):
+	$(CLIB) $(DEP_URL)
+
+.PHONY:
+clean:
+	rm -f $(TARGET)
+	rm -rf deps
+```
+
+Now, when you type `make`; `arglib` will be downloaded to `deps/arglib`.
+
+
+<br>
 
 ```c
 #include <arglib.h>
