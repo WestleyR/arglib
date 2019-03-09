@@ -17,7 +17,13 @@ $ clib install WestleyR/arglib
 Add this to your main code:
 
 ```c
-#include "deps/arglib/arglib.h"
+#include "arglib/arglib.h"
+```
+
+Then add this to your `CFLAGS`:
+
+```makefile
+CFLAGS = -I deps
 ```
 
 <br>
@@ -26,46 +32,42 @@ Then, here is a basic Makefile, combine this to your main project Makefile:
 
 ```makefile
 CC = gcc
+DEPDIR = deps
+SRCDIR = src
+CFLAGS = -I $(DEPDIR) -std=c99 -Wall 
+LDFLAGS =
+
 TARGET = test
-SOURCE = example.c
 
-FUNC =
-FUNC += deps/arglib/arglib.c
-#FUNC += deps/other/deps.c
+SRC = $(wildcard $(SRCDIR)/*.c)
+DEPS = $(wildcard $(DEPDIR)/*/*.c)
 
-DEP_URL =
-DEP_URL += WestleyR/arglib
-#DEP_URL += other-user/library
-
-CLIB = clib install
+ALLFILE = $(notdir $(SRC) $(DEPS))
+OBJS = $(ALLFILE:.c=.o)
 
 .PHONY:
 all: $(TARGET)
 
 .PHONY:
-$(TARGET): $(FUNC) $(SOURCE)
-	$(CC) -o $(TARGET) $(SOURCE) $(FUNC)
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS) $(LDFLAGS)
 
 .PHONY:
-$(FUNC):
-	$(CLIB) $(DEP_URL)
+$(OBJS): $(DEPDIR)
+	$(foreach srcfile, $(SRC), $(CC) $(CFLAGS) $(LDFLAGS) -c $(srcfile);)
+	$(foreach depfile, $(DEPS), $(CC) $(CFLAGS) $(LDFLAGS) -c $(depfile);)
 
-.PHONY:
-clean:
-	rm -f $(TARGET)
-	rm -rf deps
 ```
-
-Now, when you type `make`; `arglib` will be downloaded to `deps/arglib`.
-
 
 <br>
 
-```c
-#include <arglib.h>
+### Example C file:
 
+```c
 // for printf
 #include <stdio.h>
+
+#include "arglib/arglib.h"
 
 int main(int argc, char** argv) {
 
@@ -122,10 +124,4 @@ int main(int argc, char** argv) {
 }
 ```
 
-
 <br>
-
-**BETTER README COMMING SOON!**
-
-<br>
-
