@@ -13,31 +13,32 @@
 #
 
 CC = gcc
+
+CFLAGS =
+
 TARGET = test
 SOURCE = example.c
 
-FUNC =
-FUNC += deps/arglib/arglib.c
-#FUNC += deps/other/deps.c
+SRC = $(wildcard *.c src/*.c)
 
-DEP_URL =
-DEP_URL += WestleyR/arglib
-#DEP_URL += other-user/library
+ALLFILE = $(notdir $(SRC))
 
-CLIB = clib install
+OBJS = $(ALLFILE:.c=.o)
 
 .PHONY:
 all: $(TARGET)
 
 .PHONY:
-$(TARGET): $(FUNC) $(SOURCE)
-	$(CC) -o $(TARGET) $(SOURCE) $(FUNC)
+$(TARGET): $(OBJS) $(SOURCE)
+#	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
+	$(CC) -o $(TARGET) $(OBJS)
 
 .PHONY:
-$(FUNC):
-	$(CLIB) $(DEP_URL)
+$(OBJS): $(SRC) $(DEPS)
+	$(foreach srcfile, $(SRC), $(CC) $(CFLAGS) -c $(srcfile);)
+	$(foreach depfile, $(DEPS), $(CC) $(CFLAGS) -c $(depfile);)
 
 .PHONY:
 clean:
-	rm -f $(TARGET)
-	rm -rf deps
+	rm -f arglib.o example.o
+#	rm -f $(TARGET)

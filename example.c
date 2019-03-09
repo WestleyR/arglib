@@ -1,8 +1,8 @@
 // created by: WestleyR
 // email: westleyr@nym.hush.com
 // https://github.com/WestleyR/arglib
-// date: Feb 11, 2019
-// version-1.0.1
+// date: Mar 7, 2019
+// version-1.0.2
 //
 // The Clear BSD License
 //
@@ -17,14 +17,21 @@
 #include <string.h>
 #include <dirent.h> 
 
-#include "deps/arglib/arglib.h"
+#include "src/arglib.h"
+//#include "deps/arglib/arglib.h"
 
-#define SCRIPT_VERSION "version-1.0.0, Jan 17, 2018"
+#define SCRIPT_VERSION "version-1.0.2, Mar 7, 2019"
 #define TypeFile "--type="
+
+//#define ALL_SMALL_FLAGS "lfhvc"
+
+//#define FOO "foonar"
 
 char *SCRIPT_NAME;
 char *Path;
 char *type;
+
+//void ppoo();
 
 void helpMenu() {
     printf("DESCRIPTION:\n");
@@ -35,6 +42,7 @@ void helpMenu() {
     printf("\n");
     printf("OPTIONS:\n");
     printf("  --type=string  : set type for something.\n");
+    printf("  -c, --count    : list.\n");
     printf("  -l, --list     : list.\n");
     printf("  -f, --force    : force.\n");
     printf("  -h, --help     : print help menu & exit.\n");
@@ -52,8 +60,11 @@ void scriptVersion() {
 int main(int argc, char** argv) {
     SCRIPT_NAME = argv[0];
 
-    int list;
-    int force;
+    int list = 0;
+    int force = 0;
+    int count = 0;
+
+//    hello_foo();
 
     if (argc <= 1 ) {
         helpMenu();
@@ -68,6 +79,12 @@ int main(int argc, char** argv) {
         } else if (check_flag(argv[i], "", "--version") == 0) {
             scriptVersion();
             return(0);
+        } else if (check_flag(argv[i], "", "--count") == 0) {
+            count = 1;
+        } else if (check_flag(argv[i], "", "--list") == 0) {
+            list = 1;
+        } else if (check_flag(argv[i], "", "--force") == 0) {
+            force = 1;
         } else if (var != NULL) {
             type = var;
         } else if ((strstr(argv[i], "--") == argv[i]) && (strstr(argv[i], TypeFile) != argv[i])) {
@@ -78,7 +95,7 @@ int main(int argc, char** argv) {
         }
 
         // all the avalibal sort options:
-        if (check_small_args(argv[i], "lfhv") != 0) {
+        if (check_small_args(argv[i], "lfhvc") != 0) {
             return(1);
         }
 
@@ -96,16 +113,22 @@ int main(int argc, char** argv) {
         if (find_args(argv[i], "f") == 0) {
             force = 1;
         }
+        if (find_args(argv[i], "c") == 0) {
+            count = 1;
+        }
     }
 
     if (type != NULL) {
         printf("Type: %s\n", type);
     }
-    if (list == 1) {
+    if (list != 0) {
         printf("List: true\n");
     }
-    if (force == 1) {
+    if (force != 0) {
         printf("Force: true\n");
+    }
+    if (count != 0) {
+        printf("Count: true\n");
     }
     if (Path != NULL) {
         printf("Path: %s\n", Path);
