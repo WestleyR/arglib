@@ -1,8 +1,8 @@
 // created by: WestleyR
 // email: westleyr@nym.hush.com
 // https://github.com/WestleyR/arglib
-// date: Feb 11, 2018
-// version-1.0.2
+// date: Mar 9, 2018
+// version-1.0.0.3
 //
 // The Clear BSD License
 //
@@ -87,5 +87,5 @@ int find_args(char* input, char* flag) {
 
 
 //
-// End Function
+// End arglib.c
 //

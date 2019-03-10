@@ -1,6 +1,6 @@
 {
   "name": "arglib",
-  "version": "1.0.2",
+  "version": "1.0.0",
   "repo": "WestleyR/arglib",
   "description": "Very simple argument prossesing functions",
   "keywords": ["arg", "argument", "flag", "prossesing", "options", "option", "cli"],
