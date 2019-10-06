@@ -1,2 +1,5 @@
 *.o
-test
+/test-example
+/libarglib.so
+/test
+

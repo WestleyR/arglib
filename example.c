@@ -1,8 +1,8 @@
 // created by: WestleyR
 // email: westleyr@nym.hush.com
 // https://github.com/WestleyR/arglib
-// date: Mar 7, 2019
-// version-1.0.2
+// date: Sep 26, 2019
+// version-1.0.3
 //
 // The Clear BSD License
 //
@@ -17,10 +17,9 @@
 #include <string.h>
 #include <dirent.h> 
 
-#include "src/arglib.h"
-//#include "deps/arglib/arglib.h"
+#include <arglib.h>
 
-#define SCRIPT_VERSION "version-1.0.2, Mar 7, 2019"
+#define SCRIPT_VERSION "version-1.0.3, Mar 7, 2019"
 #define TypeFile "--type="
 
 //#define ALL_SMALL_FLAGS "lfhvc"

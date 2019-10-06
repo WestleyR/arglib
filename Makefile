@@ -1,8 +1,8 @@
 # Created by: WestleyR
 # email: westleyr@nym.hush.com
-# Date: Feb 11, 2019
+# Date: Sep 26, 2019
 # https://github.com/WestleyR/arglib
-# Version-1.0.0
+# Version-1.0.2
 #
 # The Clear BSD License
 #
@@ -14,31 +14,39 @@
 
 CC = gcc
 
-CFLAGS =
+LIB_PREFIX = $(HOME)/.lib
+INCLUDE_PREFIX = $(HOME)/.lib/include
 
-TARGET = test
+LIB = libarglib.so
+
+CFLAGS = -Wall
+
+TARGET = test-example
 SOURCE = example.c
 
-SRC = $(wildcard *.c src/*.c)
+all: $(LIB)
+	$(CC) -L${HOME}/.lib -I${HOME}/.lib/include -Wall -o $(TARGET) example.c -larglib
 
-ALLFILE = $(notdir $(SRC))
+	@#$(CC) -L${HOME}/.lib/x86_64-linux-gnu -I${HOME}/.lib/include -Wall -o example example.c -larglib
+	@#$(CC) -L${HOME}/.lib/x86_64-linux-gnu/libarglib.so -Wall -o example example.c
+	@#$(CC) -L$(shell pwd) -Wall -o example example.c -larglib
 
-OBJS = $(ALLFILE:.c=.o)
+$(LIB):
+	@#$(CC) -c -fpic src/arglib.c
+	$(CC) -c src/arglib.c
+	$(CC) -shared -o $(LIB) arglib.o
 
-.PHONY:
-all: $(TARGET)
+install-lib: $(LIB)
+	mkdir -p $(LIB_PREFIX)
+	mkdir -p $(INCLUDE_PREFIX)
+	cp -f $(LIB) $(LIB_PREFIX)
+	cp -f src/arglib.h $(INCLUDE_PREFIX)
+	@echo
+	@echo "Please add this to your .bashrc:"
+	@echo
+	@echo "  export LD_LIBRARY_PATH=\$${HOME}/.lib/:\$${LD_LIBRARY_PATH}"
+	@echo
 
-.PHONY:
-$(TARGET): $(OBJS) $(SOURCE)
-#	$(CC) $(CFLAGS) -o $(TARGET) $(OBJS)
-	$(CC) -o $(TARGET) $(OBJS)
-
-.PHONY:
-$(OBJS): $(SRC) $(DEPS)
-	$(foreach srcfile, $(SRC), $(CC) $(CFLAGS) -c $(srcfile);)
-	$(foreach depfile, $(DEPS), $(CC) $(CFLAGS) -c $(depfile);)
-
-.PHONY:
 clean:
-	rm -f arglib.o example.o
-#	rm -f $(TARGET)
+	rm $(LIB) $(TARGET) arglib.o
+
